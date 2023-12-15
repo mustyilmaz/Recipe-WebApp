@@ -1,0 +1,36 @@
+﻿@page
+@model RecipeApp.Pages.Recipe.IngredientModel
+@{
+    ViewData["Title"] = "Add Ingredient";
+}
+
+<h1>Add Ingredient</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Ingredient.RecipeId" />
+
+    <div class="form-group">
+        <label asp-for="Ingredient.Name"></label>
+        <input class="form-control" asp-for="Ingredient.Name" required />
+        <span asp-validation-for="Ingredient.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Ingredient.Quantitiy">Quantity:</label><br />
+        <input class="form-control" asp-for="Ingredient.Quantitiy" type="number" min="0.01" step="0.01" required>
+        <span asp-validation-for="Ingredient.Quantitiy" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Ingredient.Unit">Unit:</label><br />
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="Ingredient.Unit" value="gr" checked="checked">
+            <label class="form-check-label">gr</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="Ingredient.Unit" value="ml">
+            <label class="form-check-label">ml</label>
+        </div>
+        <span asp-validation-for="Ingredient.Unit" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Ingredient</button>
+</form>

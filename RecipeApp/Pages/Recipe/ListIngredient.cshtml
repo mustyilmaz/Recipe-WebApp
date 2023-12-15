@@ -1,0 +1,39 @@
+﻿@page
+@model RecipeApp.Pages.Recipe.ListIngredientModel
+
+@{
+    ViewData["Title"] = "List of Ingredients";
+}
+
+<h1>List of Ingredients</h1>
+
+@if (Model.Ingredients != null && Model.Ingredients.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ingredient in Model.Ingredients)
+            {
+                <tr>
+                    <td>@ingredient.Name</td>
+                    <td>@ingredient.Quantitiy</td>
+                    <td>@ingredient.Unit</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No ingredients found for this recipe.</p>
+}
+
+<a asp-page="./Details" asp-route-id="@Model.RecipeId">Back to Recipe Details</a>
+
+

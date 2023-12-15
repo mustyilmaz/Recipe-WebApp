@@ -1,0 +1,42 @@
+﻿@page "{id}"
+@model RatingModel
+@{
+}
+<link href="~/css/jquery.rateyo.min.css" rel="stylesheet" />
+
+<h3>Rating</h3>
+
+<form method="post">
+    <div id="rateIt"></div>
+    <div>
+        <br />
+        <button type="submit" class="btn btn-primary btn-sm"  id="getRating">Rate It!</button>
+        <input type="hidden" name="_rate" id="rating"/>
+    </div>
+</form>
+
+
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/jquery.rateyo.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        var $rateYo = $("#rateIt").rateYo({
+            rating: 0,
+            fullStar: true,
+            onChange: function (rating,rateYoInstance){
+                $("#rating").val(rating);
+            }
+        });
+
+        $("#getRating").click(function () {
+
+            /* get rating */
+            var rating = $rateYo.rateYo("rating");
+
+            window.alert("You give " + rating + " rate!");
+        });
+    });
+
+</script>

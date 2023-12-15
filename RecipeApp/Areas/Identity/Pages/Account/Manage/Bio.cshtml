@@ -1,0 +1,14 @@
+﻿@page
+@model RecipeApp.Areas.Identity.Pages.Account.Manage.BioModel
+@{
+    ViewData["Title"] = "Manage Biography";
+}
+<h3>@ViewData["Title"]</h3>
+<div class="row">
+    <div class="col-md-6">
+        <form id="bio-form" method="post" enctype="multipart/form-data">
+            <input />
+            <button id="change-bio-button" type="submit" asp-page-handler="Text" class="w-100 btn btn-lg btn-primary">Change your biography</button>
+        </form>
+    </div>
+</div>

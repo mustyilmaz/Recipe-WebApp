@@ -1,0 +1,88 @@
+﻿@page
+@model RecipeApp.Pages.Recipe.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    string rate = "";
+    int i = 0; 
+}
+
+<h3>Recipes</h3>
+
+<div class="card my-2">
+    <div class="card-body">
+        <form>
+            <div class="form-group">
+                <input type="text" asp-for="SearchString" placeholder="Title"/> 
+                <select asp-for="Cuisine" asp-items="Model.Cuisines">
+                    <option value="">All</option>
+                </select>
+            </div>
+            <br />
+            <button class="btn btn-primary">Filter</button>
+        </form>
+    </div>
+
+</div>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+@foreach (var item in Model.Recipe)
+{
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                @*<img src="@Html.DisplayFor(modelItem => item.ImageUrl)" class="img-fluid rounded-start" alt="@Html.DisplayFor(modelItem => item.Title)">*@
+                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                    <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" class="img-fluid rounded-start" alt="@Html.DisplayFor(modelItem => item.Title)">
+                }
+                else
+                {
+                    <img class="card-image-top" src="~/images/default-food.jpg" />
+                }
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Ddescription)</p>
+                    <p>
+                        @{
+                            var recipeId = item.Id;
+                            double rating = 0.0;
+
+                            if (Model.RecipeAverageRatingDictionary.ContainsKey(recipeId))
+                            {
+                                rating = Model.RecipeAverageRatingDictionary[recipeId];
+                            }
+
+                            rate = rating == 0.0 ? "No rating" : $"Average rating: {rating} Out of 5.";
+                        }@rate
+                    </p>
+                    @if (item.UserId != Model.userId)
+                    {
+                        <a class="btn btn-info btn-sm" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary btn-sm" asp-page="./Edit" asp-route-id="@item.Id"> Edit </a> 
+                        <a class="btn btn-info btn-sm" asp-page="./Details" asp-route-id="@item.Id"> Details </a> 
+                        <a class="btn btn-danger btn-sm" asp-page="./Delete" asp-route-id="@item.Id"> Delete </a>
+                    }
+                    @*<a class="btn btn-light btn-sm" asp-page="./FavoriteRecipe" asp-route-id="@item.Id"> Add Favorite </a>*@
+                    <a class="btn btn-secondary btn-sm" asp-page="./Rating" asp-route-id="@item.Id"> Rate </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(Model.RatingMessage))
+{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var ratingMessage = "@Html.Raw(Model.RatingMessage)";
+            alert(ratingMessage);
+        });
+    </script>
+}
